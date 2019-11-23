@@ -86,18 +86,16 @@
 // properly destroyed first. There is no need to return a value because the
 // tree is edited in-place by reference.
 static void treeFactory(GenericTree<int>& tree) {
+  tree.clear();
+  tree.createRoot(4);
+  auto root = tree.getRootPtr();
+  auto eight = root->addChild(8);
+  root->addChild(15);
 
-  //      *****************************************************
-  //                           EXERCISE 1
-  //    TODO: Your work here! You should edit this function body!
-  //      *****************************************************
+  auto sixteen = eight->addChild(16);
+  eight->addChild(23);
 
-  // Edit the function body only. You should leave the function header alone.
-  // Build the contents of tree so that it matches the diagram above
-  // when you print it out. The main() function runs that test for you.
-
-  // ...
-
+  sixteen->addChild(42);
 }
 
 // treeFactoryTest: This function demonstrates the execution of treeFactory
