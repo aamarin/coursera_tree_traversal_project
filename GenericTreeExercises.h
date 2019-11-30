@@ -302,9 +302,7 @@ std::vector<T> traverseLevels(GenericTree<T>& tree) {
   // This defines a type alias for the appropriate TreeNode dependent type.
   // This might be convenient.
   using TreeNode = typename GenericTree<T>::TreeNode;
-
-  // Now you can refer to a pointer to a TreeNode in this function like this.
-  // TreeNode* someTreeNodePointer = nullptr;
+  std::queue<TreeNode*> nodesToExplore;
 
   // This is the results vector you need to fill.
   std::vector<T> results;
@@ -312,17 +310,24 @@ std::vector<T> traverseLevels(GenericTree<T>& tree) {
   auto rootNodePtr = tree.getRootPtr();
   if (!rootNodePtr) return results;
 
-  //      *****************************************************
-  //                           EXERCISE 2
-  //    TODO: Your work here! You should edit this function body!
-  //      *****************************************************
+  nodesToExplore.push(rootNodePtr);
+  results.push_back(rootNodePtr->data);
 
-  // Perform a level-order traversal and record the data of the nodes in
-  // the results vector. They should be placed in the vector in level order.
-  // Remember that you can add a copy of an item to the back of a std::vector
-  // with the .push_back() member function.
+  while( !nodesToExplore.empty() ) {
+    // Get a copy of the top pointer on the explore queue.
+    TreeNode* curNode = nodesToExplore.front();
 
-  // ...
+    // Now that we've retrieved the top pointer, we can pop it from the explore queue.
+    nodesToExplore.pop();
+
+    // Loop through the current node's children pointers from first to last,
+    // which we interpret as left to right
+    for (auto childPtr : curNode->childrenPtrs) {
+      // Push a copy of the child pointer onto the queue of children to explore
+      nodesToExplore.push(childPtr);
+      results.push_back(childPtr->data);
+    }
+  }
 
   return results;
 }
